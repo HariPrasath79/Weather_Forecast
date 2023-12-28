@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AdditionalInformation extends StatelessWidget {
   final IconData icon;
   final String parameter;
-  final double value;
+  final String value;
 
   const AdditionalInformation(
       {super.key,

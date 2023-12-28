@@ -1,23 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app/theme.dart';
+import 'package:weather_app/theme_provider.dart';
 import 'package:weather_app/weather.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+
+  void getCurrentAppTheme() async {
+    themeChangeProvider.setDarkTheme =
+        await themeChangeProvider.darkThemePrefs.getTheme();
+  }
+
+  @override
+  void initState() {
+    getCurrentAppTheme();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const WeatherApp(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) {
+          return themeChangeProvider;
+        })
+      ],
+      child:
+          Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: Styles.isDarkTheme(themeProvider.getDarktheme),
+          debugShowCheckedModeBanner: false,
+          home: const WeatherApp(),
+        );
+      }),
     );
   }
 }
