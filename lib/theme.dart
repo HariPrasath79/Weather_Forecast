@@ -9,6 +9,5 @@ class Styles {
         : ThemeData.light(
             useMaterial3: true,
           );
-    print(isdark);
   }
 }
