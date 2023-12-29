@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: Styles.isDarkTheme(themeProvider.getDarktheme),
+          darkTheme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
           home: const WeatherApp(),
         );
